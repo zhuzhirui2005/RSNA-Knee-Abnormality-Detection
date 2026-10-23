@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 import contextlib, hashlib, io, json, os, shutil
 from pathlib import Path
 from types import SimpleNamespace

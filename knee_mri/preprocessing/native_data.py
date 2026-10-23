@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 def select_display_window(series, policy="series_percentile"):
     """Fixed per-Series choices; full range preserves highs but reduces contrast.
 

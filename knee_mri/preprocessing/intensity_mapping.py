@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Fixed per-Series dynamic-range mappings for native encoded MRI inputs.
 
 The companded candidate keeps 88--90% of the original percentile-window slope

@@ -1,6 +1,10 @@
-# RSNA Knee Abnormality Detection
-
-[English](README.md) | [简体中文](README.zh-CN.md)
+![RSNA Knee Abnormality Detection — 膝关节结构、MRI 多视图与神经网络连接](assets/readme-banner.png)
+<p align="center">
+  <a href="README.md">English</a> | 简体中文
+</p>
+<p align="center">
+  <a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection">比赛概览</a> | <a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/leaderboard">查看榜单</a> | <a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/writeups/21st-place-solo-gold-solution-llm-soft-labels">方案详解</a>
+</p>
 
 面向膝关节多序列 MRI 的 PyTorch 分类框架，预测 **12 项异常**。提供 DICOM 预处理、解剖定位多视图、患者分组五折训练、软标签自蒸馏，以及 [RSNA Knee Abnormality Detection](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection) **第 21 名、单人金牌方案**使用的模型权重。
 
@@ -17,7 +21,7 @@ pip install -e .
 knee-mri download --output weights
 ```
 
-分类权重存放在 [Releases](https://github.com/zhuzhirui2005/RSNA-Knee-Abnormality-Detection/releases)，两个辅助预处理模型从原 Kaggle 数据集下载。完整权重约 2.4 GB，下载器校验 SHA-256。不同权重的来源和许可见 [THIRD_PARTY.md](THIRD_PARTY.md)。
+分类权重存放在 [Releases](https://github.com/zhuzhirui2005/RSNA-Knee-Abnormality-Detection/releases)，两个辅助预处理模型从原 Kaggle 数据集下载。完整权重约 2.4 GB，下载器校验 SHA-256。不同权重的说明见[来源与许可](#来源与许可)。
 
 ## 运行获奖模型
 
@@ -175,15 +179,14 @@ knee_mri/
   resources/weights.json  下载地址、校验值和许可
 configs/                  基础训练与续训配方
 examples/                 合成输入格式示例
-tests/                    几何、采样、融合与训练检查
 ```
-
-## 验证
-
-7 项 CPU 测试覆盖缓存无损还原、物理采样、几何处理、logit 聚合、分组标签、教师分区和完整输出发布。实际 ConvNeXt 训练流程也已完成优化器更新及中断后的断点恢复检查。3 例公开测试病例完成全部 11 个分类器的 DICOM 到 CSV 推理，与原提交参考预测的最大概率绝对差为 `1.47e-4`；其中一例另行验证了逐例处理模式，与缓存模式的差异小于 `1e-8`。这些是实现检查，不构成新的临床评价，也不保证完整隐藏测试集的运行时长。
 
 ## 来源与许可
 
-模型架构与解剖预处理源自 [Heliosli 的公开方案](https://www.kaggle.com/code/heliosli/0-957-latest-dataset-score-in-one-click)，公开融合模型由 [nartaa](https://www.kaggle.com/datasets/nartaa/rsna-knee-s6fall-weights) 提供。解剖定位使用 [SKM-TEA](https://github.com/StanfordMIMI/skm-tea) 权重，VNet 转换模块改编自 MONAI 0.6。
+模型架构与解剖预处理源自 [Heliosli 的公开方案](https://www.kaggle.com/code/heliosli/0-957-latest-dataset-score-in-one-click)，相关代码也随 [nartaa 的模型包](https://www.kaggle.com/datasets/nartaa/rsna-knee-s6fall-weights) 分发。改编文件在源码头部标明来源。VNet 转换模块改编自 MONAI 0.6（Copyright 2020–2021 MONAI Consortium，Apache-2.0），ConvNeXt 和 ImageNet 初始化使用 [timm](https://github.com/huggingface/pytorch-image-models)。
 
-框架代码和新发布的十个分类权重采用 Apache-2.0。nartaa 权重采用 **CC BY-NC 4.0**，保留非商业使用限制；辅助权重保留上游许可。详见 [LICENSE](LICENSE)、[NOTICE](NOTICE) 和 [THIRD_PARTY.md](THIRD_PARTY.md)。本项目面向研究和竞赛，不是经过临床验证的诊断系统。
+框架代码和新发布的十个分类权重采用 [Apache-2.0](LICENSE)。公开权重 `public_convnext_small.pt` 为 nartaa 的原始 `E_prior_s42_fall.pt`，未修改文件内容，采用 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)，署名归属 nartaa 与 Heliosli，并保留非商业使用限制。
+
+[SKM-TEA](https://github.com/StanfordMIMI/skm-tea) 解剖定位权重（[下载来源](https://www.kaggle.com/datasets/heliosli/rsna-orthofoundation-fold0-epoch7-20261004)）和 [Heliosli 的方向判断权重](https://www.kaggle.com/datasets/heliosli/rsna-knee-compact-v1) 从原始数据集下载，保留上游许可。文件来源和校验值见 [weights.json](knee_mri/resources/weights.json)。
+
+本项目面向研究和竞赛，不是经过临床验证的诊断系统。

@@ -74,7 +74,7 @@
       "bytes": 112496037,
       "sha256": "5904dd16eb9a4fd7a1caf90ac977f8fe2ef364908598c23c209db3fe7fd1563e",
       "url": "https://www.kaggle.com/api/v1/datasets/download/heliosli/rsna-orthofoundation-fold0-epoch7-20261004/anatomy.pt",
-      "license": "Upstream terms; see THIRD_PARTY.md",
+      "license": "Upstream terms; see README.md#attribution-and-license",
       "source": "https://www.kaggle.com/datasets/heliosli/rsna-orthofoundation-fold0-epoch7-20261004"
     },
     {
@@ -82,7 +82,7 @@
       "bytes": 85255211,
       "sha256": "ab623e2b619db4917639220fed15202e8c8aedd07c8e298a66a2afc0f153650a",
       "url": "https://www.kaggle.com/api/v1/datasets/download/heliosli/rsna-knee-compact-v1/side_cls.pt",
-      "license": "Upstream terms; see THIRD_PARTY.md",
+      "license": "Upstream terms; see README.md#attribution-and-license",
       "source": "https://www.kaggle.com/datasets/heliosli/rsna-knee-compact-v1"
     }
   ]

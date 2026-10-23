@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """2.5D ConvNeXt with class-specific spatial and study attention."""
 
 import math

@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Anatomical knee and patella anchors projected into each series."""
 
 import argparse, csv, hashlib, json, os, sys, time

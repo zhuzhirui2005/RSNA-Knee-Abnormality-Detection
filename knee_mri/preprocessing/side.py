@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Image-based knee side check, shared by the training-cache fix and Kaggle inference.
 
 The native cache stores coronal and axial series in a canonical frame where the study's side has already been applied:

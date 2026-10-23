@@ -1,6 +1,10 @@
-# RSNA Knee Abnormality Detection
-
-[English](README.md) | [简体中文](README.zh-CN.md)
+![RSNA Knee Abnormality Detection — knee anatomy, MRI views and neural-network connections](assets/readme-banner.png)
+<p align="center">
+  English | <a href="README.zh-CN.md">简体中文</a>
+</p>
+<p align="center">
+  <a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection">Contest Overview</a> | <a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/leaderboard">View Leaderboard</a> | <a href="https://www.kaggle.com/competitions/rsna-knee-abnormality-detection/writeups/21st-place-solo-gold-solution-llm-soft-labels">Solution Writeup</a>
+</p>
 
 A PyTorch framework for classifying **12 abnormalities from multi-series knee MRI**. It includes DICOM preprocessing, anatomical multiview rendering, grouped five-fold training, soft-label self-distillation, and the weights used in the **21st-place solo gold-medal solution** to [RSNA Knee Abnormality Detection](https://www.kaggle.com/competitions/rsna-knee-abnormality-detection).
 
@@ -17,7 +21,7 @@ pip install -e .
 knee-mri download --output weights
 ```
 
-The downloader checks SHA-256 hashes. Classification weights are hosted in [Releases](https://github.com/zhuzhirui2005/RSNA-Knee-Abnormality-Detection/releases); two auxiliary preprocessing checkpoints are retrieved from their original Kaggle datasets. The complete set is approximately 2.4 GB. See [THIRD_PARTY.md](THIRD_PARTY.md) for attribution and the different weight licenses.
+The downloader checks SHA-256 hashes. Classification weights are hosted in [Releases](https://github.com/zhuzhirui2005/RSNA-Knee-Abnormality-Detection/releases); two auxiliary preprocessing checkpoints are retrieved from their original Kaggle datasets. The complete set is approximately 2.4 GB. See [Attribution and license](#attribution-and-license) for the different weight licenses.
 
 ## Run the pretrained ensemble
 
@@ -184,17 +188,14 @@ knee_mri/
   resources/weights.json  Download locations, hashes and licenses
 configs/                  Base training and continuation recipes
 examples/                 Synthetic input schema
-tests/                    Geometry, sampling, aggregation and training checks
 ```
-
-## Verification
-
-Seven CPU tests cover lossless cache round-trips, physical sampling, geometry, logit aggregation, grouped labels, teacher partitions, and complete output publication. The actual ConvNeXt training loop was also checked through optimizer updates and a resume after an interruption at an epoch boundary. On three public test studies, all 11 classifiers completed DICOM-to-CSV inference; the largest absolute probability difference from the original submitted pipeline's reference output was `1.47e-4`. The streaming path matched the cached path within `1e-8` on an additional run of one of those studies. These are implementation checks, not a new clinical evaluation or a runtime guarantee for an entire hidden test set.
 
 ## Attribution and license
 
-The model architecture and anatomical preprocessing derive from [Heliosli's public RSNA solution](https://www.kaggle.com/code/heliosli/0-957-latest-dataset-score-in-one-click). The public ensemble member is provided by [nartaa](https://www.kaggle.com/datasets/nartaa/rsna-knee-s6fall-weights). The anatomy network uses [SKM-TEA](https://github.com/StanfordMIMI/skm-tea), with VNet transitions adapted from MONAI 0.6.
+The model architecture and anatomical preprocessing derive from [Heliosli's public RSNA solution](https://www.kaggle.com/code/heliosli/0-957-latest-dataset-score-in-one-click), also distributed in [nartaa's package](https://www.kaggle.com/datasets/nartaa/rsna-knee-s6fall-weights). Adapted source files identify their origin. VNet transitions are adapted from MONAI 0.6 (Copyright 2020–2021 MONAI Consortium, Apache-2.0). ConvNeXt and ImageNet initialization use [timm](https://github.com/huggingface/pytorch-image-models).
 
-Framework code and the ten newly released classification checkpoints are Apache-2.0. The nartaa checkpoint is **CC BY-NC 4.0**; it retains its own license, including the noncommercial restriction. Auxiliary checkpoints retain their upstream terms. See [LICENSE](LICENSE), [NOTICE](NOTICE), and [THIRD_PARTY.md](THIRD_PARTY.md).
+Framework code and the ten newly released classification checkpoints are [Apache-2.0](LICENSE). The public checkpoint, `public_convnext_small.pt`, is nartaa's unmodified `E_prior_s42_fall.pt`, licensed under [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/), with attribution to nartaa and Heliosli. Its noncommercial restriction still applies.
+
+The [SKM-TEA](https://github.com/StanfordMIMI/skm-tea) anatomy checkpoint ([source](https://www.kaggle.com/datasets/heliosli/rsna-orthofoundation-fold0-epoch7-20261004)) and [Heliosli's orientation checkpoint](https://www.kaggle.com/datasets/heliosli/rsna-knee-compact-v1) are downloaded from their original datasets and retain their upstream terms. File sources and hashes are listed in [weights.json](knee_mri/resources/weights.json).
 
 This repository is a research and competition implementation, not a clinically validated diagnostic system.

@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Physical multiview rendering with joint, patella and posterior crops."""
 
 import sys, os, json, time, hashlib, argparse

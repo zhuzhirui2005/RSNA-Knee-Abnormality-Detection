@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Full-field, native-matrix uint16 Series cache. No spatial crop or resize.
 
 One linear intensity encoding is shared by an entire Series. Source ZIP and

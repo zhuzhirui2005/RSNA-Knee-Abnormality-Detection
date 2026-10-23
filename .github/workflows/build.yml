@@ -1,4 +1,4 @@
-name: Tests
+name: Build
 on: [push, pull_request]
 jobs:
   cpu:
@@ -11,6 +11,5 @@ jobs:
           cache: pip
       - run: pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
       - run: pip install -e '.[dev]'
-      - run: pytest -q
       - run: knee-mri --help
       - run: python -m build

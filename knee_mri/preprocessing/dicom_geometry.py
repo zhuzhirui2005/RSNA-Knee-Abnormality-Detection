@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Shared, fail-closed DICOM geometry for every ConvNeXt cache builder.
 
 The contract is deliberately narrow:

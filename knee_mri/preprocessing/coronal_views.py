@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Fixed bilateral detail support when coronal medial/lateral identity is unknown.
 
 These are screen-position views, never MCL masks or inferred patient sides.

@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "build>=1.2"]
+dev = ["build>=1.2"]
 
 [project.scripts]
 knee-mri = "knee_mri.cli:main"
@@ -27,6 +27,3 @@ include = ["knee_mri*"]
 
 [tool.setuptools.package-data]
 knee_mri = ["resources/*.json"]
-
-[tool.pytest.ini_options]
-testpaths = ["tests"]

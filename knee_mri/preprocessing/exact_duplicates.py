@@ -1,4 +1,4 @@
-# Adapted from Heliosli's RSNA Knee pipeline. See NOTICE and THIRD_PARTY.md.
+# Adapted from Heliosli's RSNA Knee pipeline. See LICENSE and README.md for attribution.
 """Collapse only byte-identical native evidence with equal consumed inputs.
 
 Equality is local to a Study and this dataset's geometry/anatomy configuration.
