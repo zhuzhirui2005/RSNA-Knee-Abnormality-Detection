@@ -1,0 +1,89 @@
+{
+  "release": "v0.1.0",
+  "repository": "zhuzhirui2005/RSNA-Knee-Abnormality-Detection",
+  "files": [
+    {
+      "file": "llm_fold0.pt",
+      "bytes": 200206283,
+      "sha256": "478d5e46bb082fc8f1c72dadd26cdf11bc19889da966d94794d0e57168afe516",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "llm_fold1.pt",
+      "bytes": 200206283,
+      "sha256": "6783c93df8cf05f06bbc2b8c32c1d1ed9ae90d8d7ed2ed005177e3bde68a4435",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "llm_fold2.pt",
+      "bytes": 200206283,
+      "sha256": "363804f60c9d0e099f0423891bea9ff927a4df05babd703e2cb55caa83b86afb",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "llm_fold3.pt",
+      "bytes": 200206283,
+      "sha256": "c958802cb081716bd1c110af9923f5e7fbf13a421911c12e434c12c996baff9a",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "llm_fold4.pt",
+      "bytes": 200206283,
+      "sha256": "7fa5d08e8c62cd364fc23d8c27d00909e0caa93514328c961168c40dd42782d9",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "distilled_fold0.pt",
+      "bytes": 200208521,
+      "sha256": "02f3cf9a3ff42a2449ebc8604f6180fbcf740e7d46643b482b416772a11fe685",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "distilled_fold1.pt",
+      "bytes": 200208521,
+      "sha256": "3ff88d8382754f5dc60ec3566134b1f67fe8c5037ea3b1cc26e6ace4df958040",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "distilled_fold2.pt",
+      "bytes": 200208521,
+      "sha256": "a72b606ac8f46b8740edec520bbf523855deec540437871e1dfd1bc53aeb4aeb",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "distilled_fold3.pt",
+      "bytes": 200208521,
+      "sha256": "ff8e34cbace61a83c506b78ad062daa0ed8985cbea2086829253954994c44008",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "distilled_fold4.pt",
+      "bytes": 200208521,
+      "sha256": "5ed494546051afbaee4e47978470450581e65d7a4dcaf85326721e2be94b2359",
+      "license": "Apache-2.0"
+    },
+    {
+      "file": "public_convnext_small.pt",
+      "bytes": 200185003,
+      "sha256": "0c7297d58f061ab4e5d7c55046f51fa3e8934928046f0647a0c7854e98371c12",
+      "license": "CC-BY-NC-4.0",
+      "source": "https://www.kaggle.com/datasets/nartaa/rsna-knee-s6fall-weights"
+    },
+    {
+      "file": "anatomy.pt",
+      "bytes": 112496037,
+      "sha256": "5904dd16eb9a4fd7a1caf90ac977f8fe2ef364908598c23c209db3fe7fd1563e",
+      "url": "https://www.kaggle.com/api/v1/datasets/download/heliosli/rsna-orthofoundation-fold0-epoch7-20261004/anatomy.pt",
+      "license": "Upstream terms; see THIRD_PARTY.md",
+      "source": "https://www.kaggle.com/datasets/heliosli/rsna-orthofoundation-fold0-epoch7-20261004"
+    },
+    {
+      "file": "side_cls.pt",
+      "bytes": 85255211,
+      "sha256": "ab623e2b619db4917639220fed15202e8c8aedd07c8e298a66a2afc0f153650a",
+      "url": "https://www.kaggle.com/api/v1/datasets/download/heliosli/rsna-knee-compact-v1/side_cls.pt",
+      "license": "Upstream terms; see THIRD_PARTY.md",
+      "source": "https://www.kaggle.com/datasets/heliosli/rsna-knee-compact-v1"
+    }
+  ]
+}

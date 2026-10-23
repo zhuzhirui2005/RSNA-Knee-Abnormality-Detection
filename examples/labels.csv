@@ -1,0 +1,11 @@
+StudyInstanceUID,group,fold,ACL,MCL,Medial Meniscus,Lateral Meniscus,Medial OA,Lateral OA,PF OA,Effusion,Synovitis,Baker's,Contusion,Fracture
+synthetic-study-001,patient-001,0,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8
+synthetic-study-002,patient-002,1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1
+synthetic-study-003,patient-003,2,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8
+synthetic-study-004,patient-004,3,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1
+synthetic-study-005,patient-005,4,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8
+synthetic-study-006,patient-006,0,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1
+synthetic-study-007,patient-007,1,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8
+synthetic-study-008,patient-008,2,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1
+synthetic-study-009,patient-009,3,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8
+synthetic-study-010,patient-010,4,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1,0.8,0.1

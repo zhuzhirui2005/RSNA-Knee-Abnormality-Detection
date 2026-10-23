@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rsna-knee-mri"
+version = "0.1.0"
+description = "Multi-view ConvNeXt framework and gold-medal weights for knee MRI classification"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+dependencies = [
+  "torch>=2.5", "torchvision>=0.20", "timm==1.0.25", "numpy>=1.26,<3",
+  "pandas>=2.2,<3", "opencv-python-headless==4.12.0.88", "pydicom==3.0.1",
+  "pylibjpeg>=2", "pylibjpeg-libjpeg>=2", "pylibjpeg-openjpeg>=2",
+  "zstandard>=0.23", "scikit-learn>=1.5", "safetensors>=0.4"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "build>=1.2"]
+
+[project.scripts]
+knee-mri = "knee_mri.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["knee_mri*"]
+
+[tool.setuptools.package-data]
+knee_mri = ["resources/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
