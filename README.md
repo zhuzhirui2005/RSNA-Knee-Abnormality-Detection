@@ -43,7 +43,7 @@ knee-mri predict \
   --cache cache/test --output outputs/submission.csv
 ```
 
-One GPU is sufficient; models are loaded sequentially. `--chunk 32` reduces the number of windows encoded together on smaller GPUs (default: 64). This changes memory usage, not which windows are evaluated. A persistent cache avoids rebuilding the DICOM views on subsequent runs; omitting `--cache` uses temporary storage. Reserve additional disk space for rendered views when processing a large cohort.
+One GPU is sufficient: weights remain in host memory and classifiers move to the GPU one at a time. Studies are decoded and processed individually. `--chunk 32` reduces the number of windows encoded together on smaller GPUs (default: 64), without reducing coverage. A persistent cache avoids rebuilding DICOM views on subsequent runs; omit `--cache` to keep disk use bounded to the current study. Reserve additional disk space when retaining a large cohort's rendered views.
 
 The output contains one row per study and these columns:
 
@@ -151,6 +151,13 @@ knee-mri train --config configs/train_llm.json \
 
 Omitting `--initial` initializes the student from ImageNet, independently of the teacher's MRI weights. Repeat the continuation, teacher prediction, and student training stages for all five folds. Use `best.pt` for each student's inference weights.
 
+Export selected checkpoints to use them with the same ensemble loader (repeat for all folds):
+
+```bash
+knee-mri export --checkpoint outputs/llm/fold0/last.pt --output weights/llm_fold0.pt
+knee-mri export --checkpoint outputs/student/fold0/best.pt --output weights/distilled_fold0.pt
+```
+
 ### Resume and evaluate
 
 ```bash
@@ -179,6 +186,10 @@ configs/                  Base training and continuation recipes
 examples/                 Synthetic input schema
 tests/                    Geometry, sampling, aggregation and training checks
 ```
+
+## Verification
+
+Seven CPU tests cover lossless cache round-trips, physical sampling, geometry, logit aggregation, grouped labels, teacher partitions, and complete output publication. The actual ConvNeXt training loop was also checked through optimizer updates and a resume after an interruption at an epoch boundary. On three public test studies, all 11 classifiers completed DICOM-to-CSV inference; the largest absolute probability difference from the original submitted pipeline's reference output was `1.47e-4`. The streaming path matched the cached path within `1e-8` on an additional run of one of those studies. These are implementation checks, not a new clinical evaluation or a runtime guarantee for an entire hidden test set.
 
 ## Attribution and license
 

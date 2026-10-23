@@ -5,8 +5,10 @@ These are screen-position views, never MCL masks or inferred patient sides.
 The whole native field is always retained. Reference annotations do not enter
 view selection. IDs reuse the existing global_grid embedding range (0..5).
 """
+
 import numpy as np
 from .input_provenance import view_geometry
+
 
 def coronal_bilateral_views(native_shape, spacings, output_size, local_mm=100.0):
     """Return native loader (view ID, physical extent, (row,col) centre) tuples.
@@ -20,24 +22,31 @@ def coronal_bilateral_views(native_shape, spacings, output_size, local_mm=100.0)
     if spacings.ndim == 1:
         spacings = spacings[None]
     if spacings.ndim != 2 or spacings.shape[1] != 2 or (not len(spacings)):
-        raise ValueError('in-plane spacings must be row/column pairs')
+        raise ValueError("in-plane spacings must be row/column pairs")
     if not np.isfinite(spacings).all() or (spacings <= 0).any():
-        raise ValueError('bilateral physical views require known positive spacings')
+        raise ValueError("bilateral physical views require known positive spacings")
     spacings = np.unique(spacings, axis=0)
-    proposed = [(0, None, (0.5, 0.5)), (2, float(local_mm), (0.5, 0.25)), (3, float(local_mm), (0.5, 0.75))]
+    proposed = [
+        (0, None, (0.5, 0.5)),
+        (2, float(local_mm), (0.5, 0.25)),
+        (3, float(local_mm), (0.5, 0.75)),
+    ]
     selected = []
     seen = set()
     for view in proposed:
         _, crop, center = view
         signature = []
         for spacing in spacings:
-            g = view_geometry(native_shape, spacing, output_size, crop_mm=crop, center=center)
+            g = view_geometry(
+                native_shape, spacing, output_size, crop_mm=crop, center=center
+            )
             signature.append((g.crop_xyxy, g.valid_xyxy))
         signature = tuple(signature)
         if signature not in seen:
             selected.append(view)
             seen.add(signature)
     return selected
+
 
 def rectangle_union_area(rectangles):
     """Exact continuous-edge area, including overlapping detail fields."""
@@ -58,8 +67,15 @@ def rectangle_union_area(rectangles):
         total += (right - left) * length
     return float(total)
 
+
 def box_union_retention(box, rectangles):
     box = np.asarray(box, float)
     rectangles = np.asarray(rectangles, float).reshape(-1, 4)
-    clipped = np.concatenate([np.maximum(rectangles[:, :2], box[:2]), np.minimum(rectangles[:, 2:], box[2:])], axis=1)
+    clipped = np.concatenate(
+        [
+            np.maximum(rectangles[:, :2], box[:2]),
+            np.minimum(rectangles[:, 2:], box[2:]),
+        ],
+        axis=1,
+    )
     return rectangle_union_area(clipped) / float(np.prod(box[2:] - box[:2]))

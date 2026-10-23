@@ -43,7 +43,7 @@ knee-mri predict \
   --cache cache/test --output outputs/submission.csv
 ```
 
-一张显卡即可依次运行全部模型。默认每批编码 64 个窗口；显存较小时可设 `--chunk 32`，只改变计算批量，不减少实际读取的窗口。`--cache` 保留渲染缓存供后续复用；省略时使用临时目录。较大队列需要为渲染缓存预留磁盘空间。
+一张显卡即可运行：权重保留在内存中，分类器依次移到显卡，每次解码并处理一例。默认每批编码 64 个窗口；显存较小时可设 `--chunk 32`，不减少实际读取的窗口。`--cache` 保留渲染缓存供后续复用；省略时，磁盘临时文件仅覆盖当前病例。保留较大队列的渲染缓存时，需要另行预留磁盘空间。
 
 输出每例一行，包含病例编号及以下 12 项概率：ACL、MCL、Medial Meniscus、Lateral Meniscus、Medial OA、Lateral OA、PF OA、Effusion、Synovitis、Baker's、Contusion、Fracture。所有分支完成后才写入最终 CSV；失败时不会将部分融合结果发布到最终输出路径。
 
@@ -143,6 +143,13 @@ knee-mri train --config configs/train_llm.json \
 
 不传 `--initial`，学生独立从 ImageNet 权重初始化。五折分别执行上述步骤，学生使用各自的 `best.pt` 进行推理。
 
+将选中的训练检查点导出为推理权重，五折分别执行：
+
+```bash
+knee-mri export --checkpoint outputs/llm/fold0/last.pt --output weights/llm_fold0.pt
+knee-mri export --checkpoint outputs/student/fold0/best.pt --output weights/distilled_fold0.pt
+```
+
 ### 恢复训练与评价
 
 ```bash
@@ -170,6 +177,10 @@ configs/                  基础训练与续训配方
 examples/                 合成输入格式示例
 tests/                    几何、采样、融合与训练检查
 ```
+
+## 验证
+
+7 项 CPU 测试覆盖缓存无损还原、物理采样、几何处理、logit 聚合、分组标签、教师分区和完整输出发布。实际 ConvNeXt 训练流程也已完成优化器更新及中断后的断点恢复检查。3 例公开测试病例完成全部 11 个分类器的 DICOM 到 CSV 推理，与原提交参考预测的最大概率绝对差为 `1.47e-4`；其中一例另行验证了逐例处理模式，与缓存模式的差异小于 `1e-8`。这些是实现检查，不构成新的临床评价，也不保证完整隐藏测试集的运行时长。
 
 ## 来源与许可
 

@@ -29,7 +29,9 @@ def get_acti_layer(act: Union[Tuple[str, Dict], str], nchan: int = 0):
 
 
 class LUConv(nn.Module):
-    def __init__(self, spatial_dims: int, nchan: int, act: Union[Tuple[str, Dict], str]):
+    def __init__(
+        self, spatial_dims: int, nchan: int, act: Union[Tuple[str, Dict], str]
+    ):
         super(LUConv, self).__init__()
 
         self.act_function = get_acti_layer(act, nchan)
@@ -48,7 +50,9 @@ class LUConv(nn.Module):
         return out
 
 
-def _make_nconv(spatial_dims: int, nchan: int, depth: int, act: Union[Tuple[str, Dict], str]):
+def _make_nconv(
+    spatial_dims: int, nchan: int, depth: int, act: Union[Tuple[str, Dict], str]
+):
     layers = []
     for _ in range(depth):
         layers.append(LUConv(spatial_dims, nchan, act))
@@ -56,11 +60,19 @@ def _make_nconv(spatial_dims: int, nchan: int, depth: int, act: Union[Tuple[str,
 
 
 class InputTransition(nn.Module):
-    def __init__(self, spatial_dims: int, in_channels: int, out_channels: int, act: Union[Tuple[str, Dict], str]):
+    def __init__(
+        self,
+        spatial_dims: int,
+        in_channels: int,
+        out_channels: int,
+        act: Union[Tuple[str, Dict], str],
+    ):
         super(InputTransition, self).__init__()
 
         if 16 % in_channels != 0:
-            raise ValueError(f"16 should be divisible by in_channels, got in_channels={in_channels}.")
+            raise ValueError(
+                f"16 should be divisible by in_channels, got in_channels={in_channels}."
+            )
 
         self.spatial_dims = spatial_dims
         self.in_channels = in_channels
@@ -95,8 +107,12 @@ class DownTransition(nn.Module):
         super(DownTransition, self).__init__()
 
         conv_type: Type[Union[nn.Conv2d, nn.Conv3d]] = Conv[Conv.CONV, spatial_dims]
-        norm_type: Type[Union[nn.BatchNorm2d, nn.BatchNorm3d]] = Norm[Norm.BATCH, spatial_dims]
-        dropout_type: Type[Union[nn.Dropout, nn.Dropout2d, nn.Dropout3d]] = Dropout[Dropout.DROPOUT, dropout_dim]
+        norm_type: Type[Union[nn.BatchNorm2d, nn.BatchNorm3d]] = Norm[
+            Norm.BATCH, spatial_dims
+        ]
+        dropout_type: Type[Union[nn.Dropout, nn.Dropout2d, nn.Dropout3d]] = Dropout[
+            Dropout.DROPOUT, dropout_dim
+        ]
 
         out_channels = 2 * in_channels
         self.down_conv = conv_type(in_channels, out_channels, kernel_size=2, stride=2)
@@ -130,11 +146,19 @@ class UpTransition(nn.Module):
     ):
         super(UpTransition, self).__init__()
 
-        conv_trans_type: Type[Union[nn.ConvTranspose2d, nn.ConvTranspose3d]] = Conv[Conv.CONVTRANS, spatial_dims]
-        norm_type: Type[Union[nn.BatchNorm2d, nn.BatchNorm3d]] = Norm[Norm.BATCH, spatial_dims]
-        dropout_type: Type[Union[nn.Dropout, nn.Dropout2d, nn.Dropout3d]] = Dropout[Dropout.DROPOUT, dropout_dim]
+        conv_trans_type: Type[Union[nn.ConvTranspose2d, nn.ConvTranspose3d]] = Conv[
+            Conv.CONVTRANS, spatial_dims
+        ]
+        norm_type: Type[Union[nn.BatchNorm2d, nn.BatchNorm3d]] = Norm[
+            Norm.BATCH, spatial_dims
+        ]
+        dropout_type: Type[Union[nn.Dropout, nn.Dropout2d, nn.Dropout3d]] = Dropout[
+            Dropout.DROPOUT, dropout_dim
+        ]
 
-        self.up_conv = conv_trans_type(in_channels, out_channels // 2, kernel_size=2, stride=2)
+        self.up_conv = conv_trans_type(
+            in_channels, out_channels // 2, kernel_size=2, stride=2
+        )
         self.bn1 = norm_type(out_channels // 2)
         self.dropout = dropout_type(dropout_prob) if dropout_prob is not None else None
         self.dropout2 = dropout_type(0.5)
@@ -156,7 +180,13 @@ class UpTransition(nn.Module):
 
 
 class OutputTransition(nn.Module):
-    def __init__(self, spatial_dims: int, in_channels: int, out_channels: int, act: Union[Tuple[str, Dict], str]):
+    def __init__(
+        self,
+        spatial_dims: int,
+        in_channels: int,
+        out_channels: int,
+        act: Union[Tuple[str, Dict], str],
+    ):
         super(OutputTransition, self).__init__()
 
         conv_type: Type[Union[nn.Conv2d, nn.Conv3d]] = Conv[Conv.CONV, spatial_dims]
@@ -220,10 +250,18 @@ class VNet(nn.Module):
         self.in_tr = InputTransition(spatial_dims, in_channels, 16, act)
         self.down_tr32 = DownTransition(spatial_dims, 16, 1, act)
         self.down_tr64 = DownTransition(spatial_dims, 32, 2, act)
-        self.down_tr128 = DownTransition(spatial_dims, 64, 3, act, dropout_prob=dropout_prob)
-        self.down_tr256 = DownTransition(spatial_dims, 128, 2, act, dropout_prob=dropout_prob)
-        self.up_tr256 = UpTransition(spatial_dims, 256, 256, 2, act, dropout_prob=dropout_prob)
-        self.up_tr128 = UpTransition(spatial_dims, 256, 128, 2, act, dropout_prob=dropout_prob)
+        self.down_tr128 = DownTransition(
+            spatial_dims, 64, 3, act, dropout_prob=dropout_prob
+        )
+        self.down_tr256 = DownTransition(
+            spatial_dims, 128, 2, act, dropout_prob=dropout_prob
+        )
+        self.up_tr256 = UpTransition(
+            spatial_dims, 256, 256, 2, act, dropout_prob=dropout_prob
+        )
+        self.up_tr128 = UpTransition(
+            spatial_dims, 256, 128, 2, act, dropout_prob=dropout_prob
+        )
         self.up_tr64 = UpTransition(spatial_dims, 128, 64, 1, act)
         self.up_tr32 = UpTransition(spatial_dims, 64, 32, 1, act)
         self.out_tr = OutputTransition(spatial_dims, 32, out_channels, act)

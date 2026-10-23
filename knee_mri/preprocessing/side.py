@@ -6,6 +6,7 @@ lateral should sit at +column for both knees (a right knee is mirrored as the la
 training/dicom_geometry.flip_for_plane).  When the side is wrong, every coronal/axial image of the study is mirrored.
 side_inputs() turns one canonical native volume into a few normalised 2-D images; the classifier says whether lateral is
 at +column (correct orientation) or at -column (mirrored, i.e. the study's side is wrong)."""
+
 import numpy as np
 import cv2
 
@@ -32,5 +33,6 @@ def side_inputs(vol):
 
 def build_side_net():
     import timm, torch.nn as nn
+
     net = timm.create_model("resnet34", pretrained=False, num_classes=1, in_chans=1)
     return net
